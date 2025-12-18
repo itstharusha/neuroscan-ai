@@ -1,106 +1,102 @@
-# 🧠 NeuroScan AI  
+# NeuroScan AI  
 ### End-to-End Autism Screening Risk Prediction API  
-**Machine Learning · FastAPI · Docker · AWS ECS**
+Machine Learning · FastAPI · Docker · AWS ECS
 
 ---
 
-## 📌 Overview
+## Overview  
 
-**NeuroScan AI** is a production-ready machine learning system designed to predict **Autism Spectrum Disorder (ASD) screening risk** using structured behavioral and demographic data.
+NeuroScan AI is a fully developed machine learning solution designed to predict Autism Spectrum Disorder (ASD) screening risk using structured behavioral and demographic data.
 
-This project demonstrates a **full real-world ML lifecycle**:
-- Data preprocessing & feature engineering  
+This project demonstrates the entire machine learning lifecycle, including:  
+- Data preprocessing and feature engineering  
 - Model training and evaluation  
 - Model serialization  
-- REST API development using FastAPI  
+- REST API integration using FastAPI  
 - Containerization with Docker  
-- Cloud deployment readiness (AWS ECS Fargate)
+- Cloud deployment preparedness for AWS ECS Fargate  
 
-The system exposes a `/predict` endpoint that accepts structured JSON input and returns a **risk score** for ASD.
-
----
-
-## 🎯 Problem Statement
-
-Early screening for Autism Spectrum Disorder is critical, but manual assessments can be time-consuming and resource-intensive.
-
-**Goal:**  
-Build an automated, scalable, and deployable ML system that assists in early ASD risk screening using questionnaire-based data.
+The API exposes a /predict endpoint that accepts structured JSON data and returns an ASD risk score.
 
 ---
 
-## 🧠 Machine Learning Details
+## Problem Statement  
 
-- **Dataset**: Autism Screening for Toddlers (Kaggle)
-- **Model**: Random Forest Classifier
-- **Preprocessing**:
-  - Missing value handling
-  - Label encoding for categorical features
-  - Feature scaling with `StandardScaler`
-- **Evaluation Metrics**:
-  - Precision
-  - Recall
-  - F1-Score
-  - Confusion Matrix
-- **Model Export**: `joblib`
+Early detection of Autism Spectrum Disorder is crucial, yet manual assessments are often time-consuming and resource-intensive.
 
-> ⚠️ Note: High accuracy is expected due to dataset size and structure. Real-world deployment should include further validation.
+Objective: Build an automated, scalable, and deployable machine learning system to assist with early ASD screening using questionnaire-based data.
 
 ---
 
-## 🏗️ Project Architecture
+## Machine Learning Details  
 
+- Dataset: Autism Screening for Toddlers (Kaggle)  
+- Model: Random Forest Classifier  
+- Preprocessing:  
+  - Handling missing values  
+  - Label encoding for categorical data  
+  - Feature scaling using StandardScaler  
+- Evaluation Metrics:  
+  - Precision  
+  - Recall  
+  - F1-Score  
+  - Confusion Matrix  
+- Model Export: Serialized using joblib  
+
+Note: While the dataset yields high accuracy during development, further validation is necessary before real-world deployment.  
+
+---
+
+## Project Architecture  
 neuroscan-ai/
 ├── api/
-│ ├── main.py # FastAPI application
-│ └── schemas.py # Request schemas
+│   ├── main.py               # FastAPI application
+│   └── schemas.py            # Request schemas
 ├── src/
-│ └── model_utils.py # Model loading & preprocessing
+│   └── model_utils.py        # Model loading & preprocessing
 ├── models/
-│ ├── neuro_model_v1.joblib
-│ ├── scaler.joblib
-│ └── label_encoders.joblib
-├── input_schema.txt # Feature order reference
+│   ├── neuro_model_v1.joblib
+│   ├── scaler.joblib
+│   └── label_encoders.joblib
+├── input_schema.txt          # Reference for feature order
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
 
-yaml
-Copy code
+---
+
+## API Endpoints  
+
+### Health Check  
+- Method: GET /health  
+- Response:  
+ 
+  {
+    "status": "ok"
+  }
+  
+---
+
+### Prediction  
+- Method: POST /predict  
+- Request Body Example:  
+ 
+  {
+    "Sex": "m",
+    "A1_Score": 1,
+    "A2_Score": 0,
+    "A3_Score": 1,
+    "...": "Additional features here"
+  }
+  
+- Response Example:  
+ 
+  {
+    "risk_score": 0.87
+  }
+   
+ 
+risk_score represents the probability of ASD risk.
 
 ---
 
-## 🚀 API Endpoints
-
-### 🔹 Health Check
-GET /health
-
-pgsql
-Copy code
-
-**Response**
-```json
-{ "status": "ok" }
-🔹 Prediction
-bash
-Copy code
-POST /predict
-Request Body
-
-json
-Copy code
-{
-  "Sex": "m",
-  "A1_Score": 1,
-  "A2_Score": 0,
-  "A3_Score": 1,
-  "...": "..."
-}
-Response
-
-json
-Copy code
-{
-  "risk_score": 0.87
-}
-risk_score represents the probability of ASD risk.
